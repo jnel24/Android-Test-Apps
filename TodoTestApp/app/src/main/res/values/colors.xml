@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#45529D</color>
+    <color name="colorPrimaryDark">#405090</color>
+    <color name="colorAccent">#2EB9EE</color>
+    <color name="bgColor">#ffffff</color>
+    <color name="textColor">#252525</color>
+    <color name="cellColor">#ffffff</color>
+    <color name="icon_bg">#2E3948</color>
+</resources>

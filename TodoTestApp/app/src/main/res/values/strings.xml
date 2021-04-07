@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Branch ToDo</string>
+    <string name="empty_todo">Your to-dos are empty. Create some.</string>
+</resources>
