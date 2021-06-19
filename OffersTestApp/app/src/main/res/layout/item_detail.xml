@@ -15,7 +15,7 @@
         android:textColor="@color/text_color"
         android:paddingVertical="20dp"
         android:paddingHorizontal="16dp"
-        tools:context=".OfferDetailFragment" />
+        tools:context=".ui.OfferDetailFragment" />
 
     <TextView
         xmlns:tools="http://schemas.android.com/tools"
@@ -26,6 +26,6 @@
         android:textColor="@color/gray"
         android:paddingVertical="8dp"
         android:paddingHorizontal="16dp"
-        tools:context=".OfferDetailFragment" />
+        tools:context=".ui.OfferDetailFragment" />
 
 </LinearLayout>

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginHorizontal="16dp"
@@ -9,7 +11,7 @@
     android:divider="?android:attr/dividerHorizontal"
     android:orientation="horizontal"
     android:showDividers="middle"
-    tools:context=".OfferListActivity">
+    tools:context=".ui.OfferListActivity">
 
     <!--This a two-pane layout for tablet screens.-->
     <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -22,7 +24,7 @@
         android:layout_marginHorizontal="8dp"
         android:requiresFadingEdge="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:context="com.nelson.testapp.OfferListActivity"
+        tools:context="com.nelson.testapp.ui.OfferListActivity"
         tools:listitem="@layout/order_item" />
 
     <FrameLayout

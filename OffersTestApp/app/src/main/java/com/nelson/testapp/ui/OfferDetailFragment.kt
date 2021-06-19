@@ -1,18 +1,20 @@
-package com.nelson.testapp
+package com.nelson.testapp.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import com.google.android.material.appbar.CollapsingToolbarLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import coil.load
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
-import com.nelson.testapp.models.OfferItem
-import com.nelson.testapp.models.OfferRepository
+import com.nelson.testapp.R
+import com.nelson.testapp.data.OfferItem
+import com.nelson.testapp.viewmodel.BaseViewModel
+import com.nelson.testapp.viewmodel.OffersViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
@@ -20,9 +22,7 @@ import kotlin.coroutines.CoroutineContext
 /**
  * A fragment representing a single OfferItem detail screen.
  *
- * This fragment is either contained in a [OfferListActivity]
- * in two-pane mode (on tablets) or a [OfferDetailActivity]
- * on handsets.
+ * This fragment is contained in a [OfferListActivity].
  */
 class OfferDetailFragment : Fragment(), CoroutineScope {
 
@@ -49,8 +49,8 @@ class OfferDetailFragment : Fragment(), CoroutineScope {
 
         // Grab OfferItem by identifier and setup collapsing toolbar
         arguments?.let {
-            if (it.containsKey(ARG_ITEM_ID)) {
-                item = OfferRepository.getItem(it.getString(ARG_ITEM_ID)!!)
+            if (it.containsKey(ARG_ITEM_ID) && it.getSerializable(ARG_ITEM_ID) is OfferItem) {
+                item = it.getSerializable(ARG_ITEM_ID) as OfferItem
                 val toolBarLayout = activity?.findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)
                 toolBarLayout?.title = item?.value
                 val image = activity?.findViewById<ImageView>(R.id.detail_image)

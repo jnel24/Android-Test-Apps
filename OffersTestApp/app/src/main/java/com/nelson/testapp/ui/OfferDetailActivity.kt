@@ -1,10 +1,11 @@
-package com.nelson.testapp
+package com.nelson.testapp.ui
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
-import com.nelson.testapp.models.OfferRepository
+import com.nelson.testapp.R
+import com.nelson.testapp.data.OfferRepository
 
 /**
  * An activity representing a single OfferItem detail screen.
@@ -28,8 +29,9 @@ class OfferDetailActivity : AppCompatActivity() {
             // using a fragment transaction.
             val fragment = OfferDetailFragment().apply {
                 arguments = Bundle().apply {
-                    putString(OfferDetailFragment.ARG_ITEM_ID,
-                            intent.getStringExtra(OfferDetailFragment.ARG_ITEM_ID))
+                    putSerializable(
+                        OfferDetailFragment.ARG_ITEM_ID,
+                            intent.getSerializableExtra(OfferDetailFragment.ARG_ITEM_ID))
                 }
             }
 
@@ -37,11 +39,6 @@ class OfferDetailActivity : AppCompatActivity() {
                     .add(R.id.item_detail_container, fragment)
                     .commit()
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        OfferRepository.cacheOffers(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem) =
@@ -52,4 +49,5 @@ class OfferDetailActivity : AppCompatActivity() {
                 }
                 else -> super.onOptionsItemSelected(item)
             }
+
 }
