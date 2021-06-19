@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
 import com.nelson.testapp.R
 import com.nelson.testapp.data.OfferRepository
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * An activity representing a single OfferItem detail screen.
@@ -14,6 +15,7 @@ import com.nelson.testapp.data.OfferRepository
  * item details are presented side-by-side with a list of items
  * in a [OfferListActivity].
  */
+@AndroidEntryPoint
 class OfferDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

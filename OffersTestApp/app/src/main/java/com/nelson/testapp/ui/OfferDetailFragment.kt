@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import coil.load
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -15,21 +17,23 @@ import com.nelson.testapp.R
 import com.nelson.testapp.data.OfferItem
 import com.nelson.testapp.viewmodel.BaseViewModel
 import com.nelson.testapp.viewmodel.OffersViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext
 
 /**
  * A fragment representing a single OfferItem detail screen.
- *
- * This fragment is contained in a [OfferListActivity].
  */
+@AndroidEntryPoint
 class OfferDetailFragment : Fragment(), CoroutineScope {
 
     /**
      * The OfferItem for the fragment to present.
      */
     private var item: OfferItem? = null
+
+    private val offersViewModel: OffersViewModel by viewModels()
 
     private val fab : FloatingActionButton? by lazy { activity?.findViewById<FloatingActionButton>(R.id.fab) }
 
@@ -61,11 +65,14 @@ class OfferDetailFragment : Fragment(), CoroutineScope {
         reloadFab()
 
         fab?.setOnClickListener { view ->
-            item?.isFavorite = !item!!.isFavorite
-            reloadFab()
-            val text = if (item!!.isFavorite) "favorited" else "unfavorited"
-            Snackbar.make(view, "Order $text", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            item?.let {
+                it.isFavorite = !it.isFavorite
+                offersViewModel.setAction(OffersViewModel.Action.UpdateOffer(it))
+                reloadFab()
+                val text = if (item!!.isFavorite) "favorited" else "unfavorited"
+                Snackbar.make(view, "Order $text", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+            }
         }
 
         // Fill TextViews with data from OfferItem

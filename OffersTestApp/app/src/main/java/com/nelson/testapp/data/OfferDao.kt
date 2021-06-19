@@ -9,7 +9,7 @@ import androidx.room.*
 @Dao
 interface OfferDao {
 
-    @Query("SELECT * FROM offers")
+    @Query("SELECT * FROM offers ORDER BY name")
     fun getOffers(): LiveData<List<OfferItem>>
 
     @Query("SELECT * FROM offers WHERE id = :id")

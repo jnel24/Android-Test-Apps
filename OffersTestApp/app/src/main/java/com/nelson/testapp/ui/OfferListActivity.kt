@@ -2,12 +2,12 @@ package com.nelson.testapp.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -17,11 +17,10 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.nelson.testapp.R
-import com.nelson.testapp.data.AppDatabase
 import com.nelson.testapp.data.OfferItem
-import com.nelson.testapp.data.OfferRepository
 import com.nelson.testapp.viewmodel.OffersViewModel
 import com.nelson.testapp.viewmodel.OffersViewModel.*
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * An activity representing a list of OrderItems.
@@ -32,6 +31,7 @@ import com.nelson.testapp.viewmodel.OffersViewModel.*
  * On tablets, the activity presents the list of items and item
  * details (in a [OfferDetailFragment]) side-by-side using two panes.
  */
+@AndroidEntryPoint
 class OfferListActivity : AppCompatActivity() {
 
     /**
@@ -39,7 +39,7 @@ class OfferListActivity : AppCompatActivity() {
      */
     private var twoPane: Boolean = false
 
-    lateinit var offersViewModel: OffersViewModel
+    private val offersViewModel: OffersViewModel by viewModels()
 
     private var offers : List<OfferItem> = emptyList()
 
@@ -47,36 +47,19 @@ class OfferListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_list)
 
-        setupDatabase()
-
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         toolbar.title = title
 
-        offersViewModel.getOffers()?.observe(this, androidx.lifecycle.Observer {
-            if (it.isNullOrEmpty()) {
-                offersViewModel.setAction(Action.LoadOffers(assets))
-            } else {
-                offers = it
-                setupRecyclerView()
-            }
+        offersViewModel.getOffers()?.observe(this, {
+            offers = it
+            setupRecyclerView()
         })
 
         if (findViewById<NestedScrollView>(R.id.item_detail_container) != null) {
             // If this view is present, then the activity should be in two-pane mode.
             twoPane = true
         }
-    }
-
-    private fun setupDatabase() {
-        val database = AppDatabase.getInstance(this)
-        if (database != null) {
-            val offerRepo = OfferRepository(database)
-            offersViewModel = OffersViewModel(offerRepo)
-        } else {
-            Log.e("DATABASE_ERROR", "App Database could not be created.")
-        }
-
     }
 
     override fun onResume() {

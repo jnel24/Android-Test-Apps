@@ -5,31 +5,48 @@ import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
+import com.nelson.testapp.workers.DatabaseWorker
+import com.nelson.testapp.workers.DatabaseWorker.Companion.KEY_FILENAME
 
 /**
  * The Room Database abstract class for the [OfferDao].
  */
 @Database(entities = [OfferItem::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun offerDao(): OfferDao?
+    abstract fun offerDao(): OfferDao
 
     companion object {
-        private val LOG_TAG = AppDatabase::class.java.simpleName
-        private val LOCK = Any()
+        const val DATA_FILENAME = "offers.json"
         private const val DATABASE_NAME = "offersDatabase"
-        private var sInstance: AppDatabase? = null
-        fun getInstance(context: Context): AppDatabase? {
-            if (sInstance == null) {
-                synchronized(LOCK) {
-                    Log.d(LOG_TAG, "Creating new database instance...")
-                    sInstance = Room.databaseBuilder(context
-                        .applicationContext,
-                        AppDatabase::class.java, DATABASE_NAME)
-                        .build()
-                }
+
+        // For Singleton instantiation
+        @Volatile private var instance: AppDatabase? = null
+
+        fun getInstance(context: Context): AppDatabase {
+            return instance ?: synchronized(this) {
+                instance ?: buildDatabase(context).also { instance = it }
             }
-            Log.d(LOG_TAG, "Getting the database instance...")
-            return sInstance
+        }
+
+
+        private fun buildDatabase(context: Context): AppDatabase {
+            return Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
+                .addCallback(
+                    object : RoomDatabase.Callback() {
+                        override fun onCreate(db: SupportSQLiteDatabase) {
+                            super.onCreate(db)
+                            val request = OneTimeWorkRequestBuilder<DatabaseWorker>()
+                                .setInputData(workDataOf(KEY_FILENAME to DATA_FILENAME))
+                                .build()
+                            WorkManager.getInstance(context).enqueue(request)
+                        }
+                    }
+                )
+                .build()
         }
     }
 }

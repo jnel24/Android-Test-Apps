@@ -1,28 +1,28 @@
 package com.nelson.testapp.data
 
 import androidx.lifecycle.LiveData
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Repository class for storing and accessing [OfferItem].
  */
-class OfferRepository(var database: AppDatabase) {
+@Singleton
+class OfferRepository @Inject constructor(private val offerDao: OfferDao) {
 
-    private var offers: LiveData<List<OfferItem>>? = null
-
-    fun loadOffers(): LiveData<List<OfferItem>>? {
-        offers = database.offerDao()?.getOffers()
-        return offers
+    fun loadOffers(): LiveData<List<OfferItem>> {
+        return offerDao.getOffers()
     }
 
     fun getOffer(id: String) : LiveData<OfferItem>? {
-        return database.offerDao()?.getOffer(id)
+        return offerDao.getOffer(id)
     }
 
     suspend fun insertOffers(offers: List<OfferItem>) {
-        database.offerDao()?.insertAll(offers)
+        offerDao.insertAll(offers)
     }
 
     suspend fun insertOffer(offer: OfferItem) {
-        database.offerDao()?.insert(offer)
+        offerDao.insert(offer)
     }
 }
