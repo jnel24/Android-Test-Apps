@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/order_favorite"
+            android:id="@+id/offer_favorite"
             android:elevation="10dp"
             android:src="@drawable/unfavorite"
             android:layout_width="@dimen/favorite_size"
@@ -34,7 +34,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/order_image"
+                android:id="@+id/offer_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -46,7 +46,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/order_value"
+        android:id="@+id/offer_value"
         android:text="$1.00 cash back"
         android:textSize="12sp"
         android:textColor="@color/text_color"
@@ -59,7 +59,7 @@
         android:textAppearance="?attr/textAppearanceListItem" />
 
     <TextView
-        android:id="@+id/order_name"
+        android:id="@+id/offer_name"
         android:text="Product"
         android:textSize="11sp"
         android:textColor="@color/text_color"

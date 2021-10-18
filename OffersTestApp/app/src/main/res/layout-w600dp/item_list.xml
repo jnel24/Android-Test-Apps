@@ -25,7 +25,7 @@
         android:requiresFadingEdge="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         tools:context="com.nelson.testapp.ui.OfferListActivity"
-        tools:listitem="@layout/order_item" />
+        tools:listitem="@layout/item_offer" />
 
     <FrameLayout
         android:id="@+id/item_detail_container"

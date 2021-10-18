@@ -2,10 +2,13 @@ package com.nelson.testapp.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
 import com.nelson.testapp.R
 import com.nelson.testapp.data.OfferRepository
+import com.nelson.testapp.databinding.ActivityItemDetailBinding
+import com.nelson.testapp.ui.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -16,12 +19,14 @@ import dagger.hilt.android.AndroidEntryPoint
  * in a [OfferListActivity].
  */
 @AndroidEntryPoint
-class OfferDetailActivity : AppCompatActivity() {
+class OfferDetailActivity : BaseActivity<ActivityItemDetailBinding>() {
+
+    override val bindingInflater: (LayoutInflater) -> ActivityItemDetailBinding =
+        ActivityItemDetailBinding::inflate
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_item_detail)
-        setSupportActionBar(findViewById(R.id.detail_toolbar))
+        setSupportActionBar(binding.detailToolbar)
 
         // Show the Up button in the action bar.
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

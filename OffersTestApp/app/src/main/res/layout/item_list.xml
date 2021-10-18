@@ -17,6 +17,6 @@
         android:layout_marginHorizontal="8dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         tools:context=".ui.OfferListActivity"
-        tools:listitem="@layout/order_item" />
+        tools:listitem="@layout/item_offer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

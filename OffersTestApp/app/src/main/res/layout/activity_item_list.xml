@@ -31,7 +31,9 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <include layout="@layout/item_list" />
+        <include
+            android:id="@+id/layout_list"
+            layout="@layout/item_list" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/scroll_up_fab"

@@ -1,11 +1,11 @@
 package com.nelson.testapp.viewmodel
 
-import android.content.res.AssetManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.nelson.testapp.data.OfferItem
 import com.nelson.testapp.data.OfferRepository
 import com.nelson.testapp.viewmodel.OffersViewModel.Action
+import com.nelson.testapp.viewmodel.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
